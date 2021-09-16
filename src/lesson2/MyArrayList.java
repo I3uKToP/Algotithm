@@ -3,28 +3,37 @@ package lesson2;
 public class MyArrayList<T extends Comparable<T>> {
     private T[] list;
     private int size;
+    private int capacity;
     private final int DEFAULT_CAPACITY = 10;
 
     public MyArrayList(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity <= 0");
         }
+        this.capacity = capacity;
         list = (T[]) new Comparable[capacity];
     }
 
     public MyArrayList() {
+        capacity = DEFAULT_CAPACITY;
         list = (T[]) new Comparable[DEFAULT_CAPACITY];
     }
 
     public void add(T item) {
-        //check size
+        if (size==capacity) {
+            increaseArray();
+        }
         list[size] = item;
         size++;
     }
 
     public void add(int index, T item) {
-        //check size
-        //check index
+        if (index > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        if(size==capacity) {
+            increaseArray();
+        }
         for (int i = size; i > index; i--) {
             list[i] = list[i - 1];
         }
@@ -149,5 +158,14 @@ public class MyArrayList<T extends Comparable<T>> {
             }
         }
     }
+
+    public void increaseArray() {
+        int newSize = (int) (capacity*1.5+1);
+        T[] temp = (T[]) new Object[newSize];
+        System.arraycopy(list, 0, temp, 0, size);
+        list = temp;
+    }
+
+
 
 }

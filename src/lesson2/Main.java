@@ -69,16 +69,52 @@ public class Main {
 
         int n = 100000;
         Random random = new Random();
-        MyArrayList<Integer> mal = new MyArrayList<>(n);
-        for (int i = 0; i < n; i++) {
-            mal.add(random.nextInt(10));
-        }
-        System.out.println(mal);
-//        mal.selectionSort();
-//        mal.insertionSort();
-        mal.bubbleSort();
-        System.out.println(mal);
+//        MyArrayList<Integer> mal = new MyArrayList<>(n);
+//        for (int i = 0; i < n; i++) {
+//            mal.add(random.nextInt(10));
+//        }
+//        System.out.println(mal);
+////        mal.selectionSort();
+////        mal.insertionSort();
+//        mal.bubbleSort();
+//        System.out.println(mal);
 
+        MyArrayList<Integer> arrForSelection = new MyArrayList<>(n);
+        MyArrayList<Integer> arrForInsertion = new MyArrayList<>(n);
+        MyArrayList<Integer> arrForBuble = new MyArrayList<>(n);
+
+        for (int i = 0; i < n; i++) {
+            arrForSelection.add(random.nextInt(n));
+        }
+
+        for (int i = 0; i < n; i++) {
+            arrForInsertion.add(random.nextInt(n));
+        }
+
+        for (int i = 0; i < n; i++) {
+            arrForBuble.add(random.nextInt(n));
+        }
+
+        System.out.println("Время сортивовки методом выбора");
+        long before = System.currentTimeMillis();
+        arrForSelection.selectionSort();
+        long after = System.currentTimeMillis();
+        long time = (after - before)/1000;
+        System.out.println("Время выполнения сортировки методом выбора: " + time + " секунд");
+
+        System.out.println("Время сортивовки методом вставки");
+        long before1 = System.currentTimeMillis();
+        arrForInsertion.insertionSort();
+        long after1 = System.currentTimeMillis();
+        long time1 = (after1 - before1)/1000;
+        System.out.println("Время выполнения сортировки методом вставки: " + time1 + " секунд");
+
+        System.out.println("Время сортивовки методом пузырьком");
+        long before2 = System.currentTimeMillis();
+        arrForSelection.selectionSort();
+        long after2 = System.currentTimeMillis();
+        long time2 = (after2 - before2)/1000;
+        System.out.println("Время выполнения сортировки методом пузырька: " + time2 + " секунд");
 
 
     }
