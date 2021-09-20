@@ -5,17 +5,20 @@ import java.util.EmptyStackException;
 public class MyPriorityQueue<T extends Comparable<T>> {
     private T[] list;
     private int size;
+    private int capacity;
     private final int DEFAULT_CAPACITY = 10;
 
     public MyPriorityQueue(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity: " + capacity);
         }
+        this.capacity = capacity;
         list = (T[]) new Comparable[capacity];
     }
 
     public MyPriorityQueue() {
         list = (T[]) new Comparable[DEFAULT_CAPACITY];
+        capacity = DEFAULT_CAPACITY;
     }
 
     public T peek() {
@@ -27,7 +30,7 @@ public class MyPriorityQueue<T extends Comparable<T>> {
 
     public void insert(T item) {
         if (isFull()) {
-            // расширение массива
+            reCapacity();
             throw new StackOverflowError();
         }
         list[size] = item;
@@ -58,7 +61,8 @@ public class MyPriorityQueue<T extends Comparable<T>> {
         return size == list.length;
     }
 
-    private void reCapacity(int newSize) {
+    private void reCapacity() {
+        int newSize = (int)(capacity*1.5+1);
         T[] temp = (T[]) new Object[newSize];
         System.arraycopy(list, 0, temp, 0, size);
         list = temp;
