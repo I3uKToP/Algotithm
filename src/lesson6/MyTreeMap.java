@@ -11,6 +11,7 @@ public class MyTreeMap<K extends Comparable<K>, V> {
         Node left;
         Node right;
         int size;
+        int height;
 
         public Node(K key, V value) {
             this.key = key;
@@ -28,6 +29,18 @@ public class MyTreeMap<K extends Comparable<K>, V> {
             return 0;
         }
         return node.size;
+    }
+
+
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return node.height;
     }
 
     public boolean isEmpty() {
@@ -85,6 +98,7 @@ public class MyTreeMap<K extends Comparable<K>, V> {
             node.right = put(node.right, key, value);
         }
         node.size = size(node.left) + size(node.right) + 1;
+        node.height = 1 + Math.max(height(node.left), height(node.right));
         return node;
     }
 
@@ -112,6 +126,7 @@ public class MyTreeMap<K extends Comparable<K>, V> {
         }
         node.left = removeMin(node.left);
         node.size = size(node.left) + size(node.right) + 1;
+        node.height = 1 + Math.max(height(node.left), height(node.right));
         return node;
     }
 
@@ -142,7 +157,40 @@ public class MyTreeMap<K extends Comparable<K>, V> {
             node.left = temp.left;
         }
         node.size = size(node.left) + size(node.right) + 1;
+        node.height = 1 + Math.max(height(node.left), height(node.right));
         return node;
+    }
+
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node node) {
+        boolean balance;
+        int leftHeight;
+        int rightHeight;
+       if (node.left == null) {
+           leftHeight=0;
+       } else {
+           leftHeight=node.left.height;
+       }
+        if (node.right == null) {
+            rightHeight=0;
+        } else {
+            rightHeight=node.right.height;
+        }
+        int diff = Math.abs(rightHeight-leftHeight);
+        if(diff <= 1) {
+            balance = true;
+        } else  balance= false;
+        if (balance !=false && node.left !=null) {
+            balance = isBalanced(node.left);
+        }
+        if (balance !=false && node.right !=null) {
+            balance = isBalanced(node.right);
+        }
+        return balance;
+
     }
 
     @Override
