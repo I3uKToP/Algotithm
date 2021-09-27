@@ -14,8 +14,9 @@ public class Main {
 //        System.out.println(multiply(3, 8));
 //        System.out.println(recMultiply(3, 8));
 
-        reversPrint("qwerty".toCharArray());
+//        reversPrint("qwerty".toCharArray());
 
+        System.out.println(pow(5,5));
     }
 
     public static void reversPrint(char[] arr){
@@ -92,5 +93,12 @@ public class Main {
             return 1;
         }
         return recFact(n - 1) * n;
+    }
+
+    public static int pow(int x, int n) {
+        if (n==0) {
+            return 1;
+        }
+        return pow(x, n-1)*x;
     }
 }
